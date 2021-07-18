@@ -2,17 +2,23 @@ package com.traffic_capturing;
 
 import org.pcap4j.core.*;
 import org.pcap4j.packet.Packet;
+import org.pcap4j.packet.SctpPacket;
 import org.pcap4j.util.NifSelector;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
-
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.io.*;
 public class TrafficCaptureThr extends Thread {
     private final String[] filters;
     public TrafficCaptureThr(String[] args){
         this.filters = args;
     }
     private static PcapHandle handle;
-
+    private static ServerSocket server;
+    private static Socket streamOut;
+    private static BufferedWriter msgOut;
     private static PcapNetworkInterface getNetworkDevice() {
         PcapNetworkInterface device = null;
         try {
@@ -55,8 +61,7 @@ public class TrafficCaptureThr extends Thread {
         handle.setFilter(filter, BpfProgram.BpfCompileMode.OPTIMIZE);
     }
     @Override
-    public void run()
-    {
+    public void run() {
         try {
         handlerInit();
         //check app arguments
@@ -66,12 +71,25 @@ public class TrafficCaptureThr extends Thread {
         PacketListener listener = new PacketListener() {
             @Override
             public void gotPacket(Packet packet) {
-                System.out.println(packet);
+                try {
+                        msgOut.write(packet.length() + "\n");
+                        msgOut.flush();
+                }catch (IOException e) {}
             }
         };
-            handle.loop(10, listener);
-        }catch(PcapNativeException| InterruptedException | NotOpenException e) {}
+        try {
+            server = new ServerSocket(9999);
+            streamOut = server.accept();
+            System.out.println("Connection Started");
+            msgOut = new BufferedWriter(new OutputStreamWriter(streamOut.getOutputStream()));
+            handle.loop(-1, listener);
+        }finally {
+            streamOut.close();
+            msgOut.close();
+            server.close();
+            handle.close();
+        }
+        }catch(PcapNativeException| InterruptedException | NotOpenException | IOException e) {}
 
-        handle.close();
     }
 }
