@@ -1,6 +1,6 @@
 # SparkTrafficLimit test task
 ### Tasks
-#### Preparatory work: :white_check_mark:
+#### Preparation work work: :white_check_mark:
 Download, install and run any relational database (Postgres, MySQL, etc.), as well as Apache Kafka (if you wish, you can use Docker).
 
 #### Create a relational DB: :white_check_mark:
@@ -46,7 +46,7 @@ mvn exec:java -Dexec.mainClass="com.main.TrafficLimit"
 
 Or use intelliji IDEA IDE or same, with Maven framework.
 
-#### For an easy start, you can use a virtual machine image(**Oracle Virtual Box**)
+#### For easy start, you can use a virtual machine image(**Oracle Virtual Box**)
 https://disk.yandex.ru/d/AQZ0zujsBZLC1w
 
 ```
