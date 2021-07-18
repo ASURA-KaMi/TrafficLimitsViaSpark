@@ -50,7 +50,10 @@ public class TrafficCaptureThr extends Thread {
         TrafficCounterSpark counter = new TrafficCounterSpark();
         counter.start();
     }
-
+    public static void dummyCounterThreadInit (){
+        dummyCounter counter = new dummyCounter();
+        counter.start();
+    }
     private void setFilters() throws PcapNativeException, NotOpenException{
         String filter;
         switch (this.filters[0]){
@@ -71,7 +74,8 @@ public class TrafficCaptureThr extends Thread {
     public void run() {
         try {
         handlerInit();
-        counterThreadInit();
+        //counterThreadInit(); idk how to convert DStream<Integer> to int and call an external procedure cuz im use dummyCounter
+
         //check app arguments
         if (this.filters.length > 0)
             setFilters();
