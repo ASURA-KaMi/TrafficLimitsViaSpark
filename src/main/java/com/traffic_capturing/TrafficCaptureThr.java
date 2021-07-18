@@ -45,6 +45,12 @@ public class TrafficCaptureThr extends Thread {
         int readTimeout = 100;      // in milliseconds
         handle = device.openLive(snapshotLength, PcapNetworkInterface.PromiscuousMode.PROMISCUOUS, readTimeout);
     }
+
+    public static void counterThreadInit (){
+        TrafficCounterSpark counter = new TrafficCounterSpark();
+        counter.start();
+    }
+
     private void setFilters() throws PcapNativeException, NotOpenException{
         String filter;
         switch (this.filters[0]){
@@ -60,10 +66,12 @@ public class TrafficCaptureThr extends Thread {
         }
         handle.setFilter(filter, BpfProgram.BpfCompileMode.OPTIMIZE);
     }
+
     @Override
     public void run() {
         try {
         handlerInit();
+        counterThreadInit();
         //check app arguments
         if (this.filters.length > 0)
             setFilters();
@@ -72,6 +80,7 @@ public class TrafficCaptureThr extends Thread {
             @Override
             public void gotPacket(Packet packet) {
                 try {
+                        System.out.println(packet);
                         msgOut.write(packet.length() + "\n");
                         msgOut.flush();
                 }catch (IOException e) {}
