@@ -128,8 +128,10 @@ test=# SELECT * FROM traffic_limits.limits_per_hour;
 ```
 | id | limit_name | limit_value | effective_date
 |----|------------|------------:|----------------
-|  1 | min        |        1024 | 17:40:00
-|  2 | max        |  1073741824 | 04:15:00
+|1|min|1024|07:00:00
+|2|max|1073741824|07:00:00
+|3|min|600000|07:55:00
+|4|max|600000|07:40:00
 
 
 ### The APP startup 
