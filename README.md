@@ -95,6 +95,8 @@ docker-compose up -d
 dins@somename:~$ docker exec -it downloads_kafka_1 bash
 I have no name!@f9991edca46e:/$ kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic alerts --from-beginning --max-messages 100
 Mon Jul 19 07:55:51 MSK 2021 GOING BEYOND THE MAXIMUM LIMIT: 600000 : 39214701
+Mon Jul 19 08:00:51 MSK 2021 GOING BEYOND THE MAXIMUM LIMIT: 600000 : 251694861
+Mon Jul 19 08:15:52 MSK 2021 GOING BEYOND THE MINIMUM LIMIT: 600000 : 498323
 ```
 #### To check DB creation:
 
