@@ -22,7 +22,7 @@ Write an application with **SparkStreaming** using any public library for traffi
 It will count the amount of captured traffic in 5 minutes and if it goes beyond the minimum and maximum values, it will send a message to **Kafka** in the _alert_ topic
 A message is sent whenever the traffic volume in 5 minutes crosses any of the thresholds.
 
-#### LimitsUpdate
+#### LimitsUpdate :white_check_mark:
 The application should update the thresholds every 20 minutes (values with the maximum _effective_date_ should be taken).
 
 #### UnitTests :black_square_button:
