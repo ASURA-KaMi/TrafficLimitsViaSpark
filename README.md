@@ -92,10 +92,9 @@ docker-compose up -d
 ```
 #### To check kafka consumer do the following sequence:
 ```
-dins@somename:~$ docker exec -it kafka1 bash
-I have no name!@1426926d20b9:/$ kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic alerts --from-beginning --max-messages 100
-Sun Jul 18 20:51:28 MSK 2021 GOING BEYOND THE MINIMUM LIMIT: 1024 : 296
-^CProcessed a total of 1 messages
+dins@somename:~$ docker exec -it downloads_kafka_1 bash
+I have no name!@f9991edca46e:/$ kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic alerts --from-beginning --max-messages 100
+Mon Jul 19 07:55:51 MSK 2021 GOING BEYOND THE MAXIMUM LIMIT: 600000 : 39214701
 ```
 #### To check DB creation:
 
