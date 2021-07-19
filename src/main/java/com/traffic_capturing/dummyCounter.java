@@ -10,7 +10,7 @@ public class dummyCounter extends Thread{
     protected static JavaKafkaProducer kafkaProducer = new JavaKafkaProducer();
     private static Socket clientSocket;
     private static BufferedReader in;
-    private static final int timeInSec = 9000;
+    private static final int timeInSec = 300;
     private static String ipAddr;
     private static int minLimit = 0;
     private static int maxLimit = 0;
