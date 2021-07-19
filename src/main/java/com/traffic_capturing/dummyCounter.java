@@ -43,6 +43,12 @@ public class dummyCounter extends Thread{
                 }
             }
         }
+        public void setMax(int max){
+        maxLimit = max;
+        }
+        public void setMin(int min){
+        minLimit = min;
+        }
         public void setLimits(int min, int max){
         minLimit = min;
         maxLimit = max;

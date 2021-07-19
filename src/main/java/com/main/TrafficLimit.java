@@ -1,4 +1,5 @@
 package com.main;
+import com.jdbc.LimitsListner;
 import com.kafka_producer.*;
 import com.traffic_capturing.*;
 import org.pcap4j.core.*;
@@ -78,6 +79,8 @@ public class TrafficLimit {
         captureThreadInit(handle);
         //counterThreadInit(); idk how to convert DStream<Integer> to int and call an external procedure cuz im use dummyCounter
         counter = dummyCounterThreadInit(minLimit, maxLimit);
+        LimitsListner limitsListner = new LimitsListner(ip_server, counter);
+        limitsListner.loop();
     }
 
 }
