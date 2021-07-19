@@ -36,7 +36,6 @@ public class JavaKafkaProducer {
     }
     public void setAddr(String ipAddr){
         BOOTSTRAP_SERVERS = ipAddr + ":9092";
-        System.out.println(BOOTSTRAP_SERVERS);
     }
     public void sendLog(String alertMsg) throws ExecutionException, InterruptedException{
         date.setTime(System.currentTimeMillis());
