@@ -47,7 +47,7 @@ mvn exec:java -Dexec.mainClass="com.main.TrafficLimit"
 Or use intelliji IDEA IDE or same, with Maven framework.
 
 #### For easy start, you can use a virtual machine image(**Oracle Virtual Box**)
-https://disk.yandex.ru/d/AQZ0zujsBZLC1w
+https://yadi.sk/d/s4MqFVFzD-YiJQ
 
 ```
 user: dins
@@ -58,7 +58,45 @@ password: dins
 sudo ifconfig enp0s3 | grep inet
 ```
 And take _inet_ addres.
-
+#### For correct work you need to change ip in docker-compose.yml
+```
+dins@somename:~$ cd ./Downloads/
+dins@somename:~/Downloads$ nano docker-compose.yml
+```
+In **- KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT:** line:
+```
+version: "3"
+services:
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  kafka:
+    image: 'bitnami/kafka:latest'
+    ports:
+      - '9092:9092'
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://YOUR_VIRTUAL_BOX_ADDRESS:9092
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+```
+After this, exec next command:
+```
+docker-compose up -d
+```
+#### To check kafka consumer do the following sequence:
+```
+dins@somename:~$ docker exec -it kafka1 bash
+I have no name!@1426926d20b9:/$ kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic alerts --from-beginning --max-messages 100
+Sun Jul 18 20:51:28 MSK 2021 GOING BEYOND THE MINIMUM LIMIT: 1024 : 296
+^CProcessed a total of 1 messages
+```
 #### To check DB creation:
 
 ```
@@ -92,13 +130,7 @@ test=# SELECT * FROM traffic_limits.limits_per_hour;
 |  1 | min        |        1024 | 17:40:00
 |  2 | max        |  1073741824 | 04:15:00
 
-#### To check kafka consumer do the following sequence:
-```
-dins@somename:~$ docker exec -it kafka1 bash
-I have no name!@1426926d20b9:/$ kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic alerts --from-beginning --max-messages 100
-Sun Jul 18 20:51:28 MSK 2021 GOING BEYOND THE MINIMUM LIMIT: 1024 : 296
-^CProcessed a total of 1 messages
-```
+
 ### The APP startup 
 #### Code edit:
 Setup ip addres of your VirtualMachine or "localhost"(When the working environment is on your pc)
